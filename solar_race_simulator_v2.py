@@ -15,9 +15,16 @@ from streamlit_folium import st_folium
 
 # ── 폰트 설정 (macOS AppleGothic 우선) ──────────────────────────
 def set_font():
-    matplotlib.rcParams['font.family'] = 'AppleGothic' 
-
-set_font()
+    import urllib.request, os
+    font_path = '/tmp/NanumGothic.ttf'
+    if not os.path.exists(font_path):
+        urllib.request.urlretrieve(
+            'https://github.com/google/fonts/raw/main/ofl/nanumgothic/NanumGothic-Regular.ttf',
+            font_path
+        )
+    fm.fontManager.addfont(font_path)
+    matplotlib.rcParams['font.family'] = 'Nanum Gothic'
+    matplotlib.rcParams['axes.unicode_minus'] = False
 
 # ════════════════════════════════════════════════════════════════
 # 1. 상수 및 기본 파라미터
