@@ -15,13 +15,7 @@ from streamlit_folium import st_folium
 
 # ── 폰트 설정 (macOS AppleGothic 우선) ──────────────────────────
 def set_font():
-    candidates = ['AppleGothic', 'NanumGothic', 'Malgun Gothic', 'DejaVu Sans']
-    available = {f.name for f in fm.fontManager.ttflist}
-    for font in candidates:
-        if font in available:
-            matplotlib.rcParams['font.family'] = font
-            break
-    matplotlib.rcParams['axes.unicode_minus'] = False
+    matplotlib.rcParams['font.family'] = 'AppleGothic' 
 
 set_font()
 
