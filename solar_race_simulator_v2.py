@@ -17,20 +17,16 @@ import os
 
 # ── 폰트 설정 (서버/로컬 모두 대응) ─────────────────────────────
 def set_font():
-    font_path = '/tmp/NanumGothic.ttf'
-    if not os.path.exists(font_path):
-        try:
-            urllib.request.urlretrieve(
-                'https://github.com/google/fonts/raw/main/ofl/nanumgothic/NanumGothic-Regular.ttf',
-                font_path
-            )
-            fm.fontManager.addfont(font_path)
-            matplotlib.rcParams['font.family'] = 'Nanum Gothic'
-        except:
-            matplotlib.rcParams['font.family'] = 'DejaVu Sans'
+    # Streamlit Cloud: packages.txt로 fonts-nanum 설치됨
+    # 설치된 폰트 캐시 새로고침
+    fm._load_fontmanager(try_read_cache=False)
+    available = {f.name for f in fm.fontManager.ttflist}
+    for candidate in ['NanumGothic', 'Nanum Gothic', 'NanumBarunGothic', 'AppleGothic', 'Malgun Gothic']:
+        if candidate in available:
+            matplotlib.rcParams['font.family'] = candidate
+            break
     else:
-        fm.fontManager.addfont(font_path)
-        matplotlib.rcParams['font.family'] = 'Nanum Gothic'
+        matplotlib.rcParams['font.family'] = 'DejaVu Sans'
     matplotlib.rcParams['axes.unicode_minus'] = False
 
 set_font()
